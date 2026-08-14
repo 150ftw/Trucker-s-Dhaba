@@ -42,8 +42,9 @@ body {
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: -2;
+  z-index: 0;
   overflow: hidden;
+  pointer-events: none;
 }
 
 .full-screen-bg .bg-img {
@@ -51,7 +52,7 @@ body {
   height: 100%;
   object-fit: cover;
   object-position: center;
-  filter: brightness(0.72) contrast(1.05);
+  filter: brightness(0.75) contrast(1.05);
 }
 
 .bg-vignette-overlay {
@@ -60,7 +61,7 @@ body {
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: -1;
+  z-index: 1;
   pointer-events: none;
   background: 
     radial-gradient(ellipse at center, transparent 30%, rgba(5, 5, 8, 0.7) 100%),
