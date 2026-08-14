@@ -922,6 +922,24 @@ function setupAtmosphereModes() {
 // ══════════════════════════════════════════════════════════════════════
 const SHARE_URL = 'https://trucker-s-dhaba.vercel.app';
 
+let copyModalTimeout = null;
+
+function showCopyAlertModal() {
+  const copyModal = document.getElementById('copy-alert-modal');
+  if (!copyModal) return;
+
+  copyModal.classList.remove('hidden');
+
+  if (copyModalTimeout) clearTimeout(copyModalTimeout);
+  copyModalTimeout = setTimeout(() => {
+    copyModal.classList.add('hidden');
+  }, 2600);
+
+  copyModal.onclick = () => {
+    copyModal.classList.add('hidden');
+  };
+}
+
 function setupShareModal() {
   const btnShare = document.getElementById('btn-share');
 
@@ -929,7 +947,7 @@ function setupShareModal() {
     btnShare.addEventListener('click', () => {
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(SHARE_URL).then(() => {
-          showToast('लिंक कॉपी हो गया! दोस्तों के साथ शेयर करें ☕');
+          showCopyAlertModal();
         }).catch(() => {
           fallbackCopyText(SHARE_URL);
         });
@@ -951,9 +969,9 @@ function fallbackCopyText(text) {
     input.select();
     document.execCommand('copy');
     document.body.removeChild(input);
-    showToast('लिंक कॉपी हो गया! दोस्तों के साथ शेयर करें ☕');
+    showCopyAlertModal();
   } catch (err) {
-    showToast('लिंक: ' + text);
+    showCopyAlertModal();
   }
 }
 
