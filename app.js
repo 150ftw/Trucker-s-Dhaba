@@ -102,43 +102,75 @@ let gainNode = null;
 let isHissActive = false;
 
 // ══════════════════════════════════════════════════════════════════════
-// YOUTUBE IFRAME API — Global callback required by the API
+// YOUTUBE IFRAME API — Dynamic Loader & Setup
 // ══════════════════════════════════════════════════════════════════════
-window.onYouTubeIframeAPIReady = function () {
-  ytPlayer = new YT.Player('yt-player', {
-    height: '1',
-    width: '1',
-    playerVars: {
-      listType: 'playlist',
-      list: YT_PLAYLIST_ID,
-      autoplay: 0,
-      controls: 0,
-      disablekb: 1,
-      modestbranding: 1,
-      rel: 0,
-      showinfo: 0,
-      iv_load_policy: 3,
-      fs: 0,
-      playsinline: 1,
-      origin: window.location.origin
-    },
-    events: {
-      onReady: onPlayerReady,
-      onStateChange: onPlayerStateChange,
-      onError: onPlayerError
+function initYouTubePlayer() {
+  if (ytPlayer) return;
+  console.log('[Dhaba] Initializing YT.Player for playlist:', YT_PLAYLIST_ID);
+
+  try {
+    ytPlayer = new YT.Player('yt-player', {
+      height: '200',
+      width: '200',
+      playerVars: {
+        listType: 'playlist',
+        list: YT_PLAYLIST_ID,
+        autoplay: 0,
+        controls: 0,
+        disablekb: 1,
+        modestbranding: 1,
+        rel: 0,
+        showinfo: 0,
+        iv_load_policy: 3,
+        fs: 0,
+        playsinline: 1,
+        enablejsapi: 1,
+        origin: window.location.origin
+      },
+      events: {
+        onReady: onPlayerReady,
+        onStateChange: onPlayerStateChange,
+        onError: onPlayerError
+      }
+    });
+  } catch (err) {
+    console.error('[Dhaba] Failed to initialize YT.Player:', err);
+  }
+}
+
+function loadYouTubeAPI() {
+  if (window.YT && window.YT.Player) {
+    initYouTubePlayer();
+    return;
+  }
+
+  window.onYouTubeIframeAPIReady = function () {
+    console.log('[Dhaba] onYouTubeIframeAPIReady callback fired');
+    initYouTubePlayer();
+  };
+
+  if (!document.getElementById('yt-api-script')) {
+    const tag = document.createElement('script');
+    tag.id = 'yt-api-script';
+    tag.src = 'https://www.youtube.com/iframe_api';
+    const firstScript = document.getElementsByTagName('script')[0];
+    if (firstScript && firstScript.parentNode) {
+      firstScript.parentNode.insertBefore(tag, firstScript);
+    } else {
+      document.head.appendChild(tag);
     }
-  });
-};
+  }
+}
 
 function onPlayerReady(event) {
   isYTReady = true;
   console.log('[Dhaba] YouTube Player ready. Playlist loaded.');
+  if (statusBadge) statusBadge.textContent = 'लाउडस्पीकर तैयार है';
 
-  // Small delay to let playlist metadata populate
   setTimeout(() => {
     buildPlaylistFromYT();
     updateTrackInfo();
-  }, 1500);
+  }, 1000);
 }
 
 function onPlayerStateChange(event) {
@@ -310,7 +342,14 @@ function setupControls() {
   // Play / Pause
   if (btnPlay) {
     btnPlay.addEventListener('click', () => {
-      if (!ytPlayer || !isYTReady) return;
+      if (!ytPlayer || !isYTReady) {
+        showToast('लाउडस्पीकर तैयार हो रहा है… फिर से दबाएँ');
+        loadYouTubeAPI();
+        if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
+          try { ytPlayer.playVideo(); } catch (e) {}
+        }
+        return;
+      }
 
       if (isPlaying) {
         ytPlayer.pauseVideo();
@@ -832,4 +871,5 @@ document.addEventListener('DOMContentLoaded', () => {
   setupControls();
   spawnFireflies(18);
   setupKeyboardShortcuts();
+  loadYouTubeAPI();
 });
