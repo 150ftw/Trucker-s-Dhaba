@@ -576,7 +576,7 @@ function startTaglineRotation() {
       tagLineEl.style.opacity = '1';
       tagLineEl.style.transform = 'translateY(0)';
     }, 600);
-  }, 7500);
+  }, 16000);
 }
 
 function startHighwayClock() {
