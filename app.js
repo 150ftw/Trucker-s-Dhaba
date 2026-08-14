@@ -918,53 +918,42 @@ function setupAtmosphereModes() {
 }
 
 // ══════════════════════════════════════════════════════════════════════
-// ONE-TAP SHARE MODAL CONTROLLER
+// ONE-TAP DIRECT SHARE & COPY LINK CONTROLLER
 // ══════════════════════════════════════════════════════════════════════
+const SHARE_URL = 'https://trucker-s-dhaba.vercel.app';
+
 function setupShareModal() {
   const btnShare = document.getElementById('btn-share');
-  const btnCloseShare = document.getElementById('btn-close-share');
-  const shareModal = document.getElementById('share-modal');
-  const btnShareWhatsapp = document.getElementById('btn-share-whatsapp');
-  const btnShareTwitter = document.getElementById('btn-share-twitter');
-  const btnCopyLink = document.getElementById('btn-copy-link');
-
-  const shareText = "रात का वो आख़िरी पड़ाव ☕ | रास्ते की कड़क चाय और सदाबहार हिंदी तराने। सुनो और सुकून पाओ: ";
-  const currentUrl = window.location.href;
-
-  if (btnShareWhatsapp) {
-    btnShareWhatsapp.href = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + currentUrl)}`;
-  }
-  if (btnShareTwitter) {
-    btnShareTwitter.href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(currentUrl)}`;
-  }
 
   if (btnShare) {
     btnShare.addEventListener('click', () => {
-      if (shareModal) shareModal.classList.remove('hidden');
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(SHARE_URL).then(() => {
+          showToast('लिंक कॉपी हो गया! दोस्तों के साथ शेयर करें ☕');
+        }).catch(() => {
+          fallbackCopyText(SHARE_URL);
+        });
+      } else {
+        fallbackCopyText(SHARE_URL);
+      }
     });
   }
+}
 
-  if (btnCloseShare) {
-    btnCloseShare.addEventListener('click', () => {
-      if (shareModal) shareModal.classList.add('hidden');
-    });
-  }
-
-  if (shareModal) {
-    shareModal.addEventListener('click', (e) => {
-      if (e.target === shareModal) shareModal.classList.add('hidden');
-    });
-  }
-
-  if (btnCopyLink) {
-    btnCopyLink.addEventListener('click', () => {
-      navigator.clipboard.writeText(currentUrl).then(() => {
-        showToast('लिंक कॉपी हो गया! दोस्तों के साथ शेयर करें ☕');
-        if (shareModal) shareModal.classList.add('hidden');
-      }).catch(() => {
-        showToast('लिंक: ' + currentUrl);
-      });
-    });
+function fallbackCopyText(text) {
+  try {
+    const input = document.createElement('textarea');
+    input.value = text;
+    input.style.position = 'fixed';
+    input.style.opacity = '0';
+    document.body.appendChild(input);
+    input.focus();
+    input.select();
+    document.execCommand('copy');
+    document.body.removeChild(input);
+    showToast('लिंक कॉपी हो गया! दोस्तों के साथ शेयर करें ☕');
+  } catch (err) {
+    showToast('लिंक: ' + text);
   }
 }
 
