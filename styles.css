@@ -968,3 +968,246 @@ body {
   border: none;
   cursor: pointer;
 }
+
+/* ══════════════════════════════════════════════════════════════
+   12. TOP RIGHT ACTIONS (WEATHER & SHARE BUTTONS)
+   ══════════════════════════════════════════════════════════════ */
+.top-right-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.top-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--color-cream);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.top-action-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: translateY(-1px);
+}
+
+.share-top-btn {
+  background: rgba(255, 179, 0, 0.15);
+  border-color: rgba(255, 179, 0, 0.35);
+  color: var(--color-amber);
+}
+
+.share-top-btn:hover {
+  background: rgba(255, 179, 0, 0.28);
+  border-color: rgba(255, 179, 0, 0.5);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   13. ATMOSPHERE MODES: HIGHWAY RAIN & FOG
+   ══════════════════════════════════════════════════════════════ */
+/* Rain Container */
+.rain-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 3;
+  overflow: hidden;
+}
+
+.rain-container.hidden {
+  display: none;
+}
+
+.raindrop {
+  position: absolute;
+  background: linear-gradient(to bottom, transparent, rgba(200, 225, 255, 0.6));
+  width: 1.5px;
+  height: 28px;
+  opacity: 0.7;
+  animation: rainFall var(--rain-speed, 0.8s) linear infinite;
+}
+
+@keyframes rainFall {
+  0% { transform: translateY(-30px) rotate(12deg); opacity: 0.8; }
+  100% { transform: translateY(105vh) rotate(12deg); opacity: 0.2; }
+}
+
+/* Fog Container */
+.fog-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 2;
+  overflow: hidden;
+  opacity: 0.45;
+  transition: opacity 1s ease;
+}
+
+.fog-container.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.fog-wave {
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 200%;
+  height: 100%;
+  background: radial-gradient(ellipse at center, rgba(220, 230, 245, 0.22) 0%, transparent 70%);
+  filter: blur(35px);
+  will-change: transform;
+}
+
+.fog-1 {
+  animation: fogDrift 28s linear infinite alternate;
+}
+
+.fog-2 {
+  top: 20%;
+  animation: fogDrift 38s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes fogDrift {
+  0% { transform: translateX(-15%) translateY(0); }
+  100% { transform: translateX(15%) translateY(-20px); }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   14. ONE-TAP SHARE GLASS MODAL
+   ══════════════════════════════════════════════════════════════ */
+.share-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(10, 8, 14, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  z-index: 250;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.share-modal-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.share-glass-card {
+  width: 90%;
+  max-width: 480px;
+  background: rgba(22, 18, 28, 0.92);
+  border: 1px solid rgba(255, 179, 0, 0.3);
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 
+    0 25px 60px rgba(0, 0, 0, 0.75),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transform: translateY(0);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.share-modal-overlay.hidden .share-glass-card {
+  transform: translateY(20px);
+}
+
+.share-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.share-header h3 {
+  font-size: 1.15rem;
+  color: var(--color-cream);
+  font-weight: 600;
+}
+
+.share-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.share-quote {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-style: italic;
+  line-height: 1.5;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 14px;
+  border-radius: 14px;
+  border-left: 3px solid var(--color-amber);
+}
+
+.share-buttons-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.share-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border-radius: 14px;
+  font-weight: 600;
+  font-size: 0.92rem;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.whatsapp-btn {
+  background: #25D366;
+  color: #FFFFFF;
+}
+.whatsapp-btn:hover {
+  background: #20BD5A;
+  transform: translateY(-1px);
+}
+
+.copy-btn {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--color-white);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.copy-btn:hover {
+  background: rgba(255, 255, 255, 0.22);
+  transform: translateY(-1px);
+}
+
+.twitter-btn {
+  background: #1DA1F2;
+  color: #FFFFFF;
+}
+.twitter-btn:hover {
+  background: #1A91DA;
+  transform: translateY(-1px);
+}
+

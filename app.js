@@ -862,6 +862,113 @@ function setupKeyboardShortcuts() {
 }
 
 // ══════════════════════════════════════════════════════════════════════
+// HIGHWAY ATMOSPHERE MODES (CLEAR NIGHT / RAIN / FOG)
+// ══════════════════════════════════════════════════════════════════════
+const ATMOSPHERE_MODES = [
+  { id: 'night', label: 'रात', icon: '🌙', toast: 'तारों भरी रात 🌌' },
+  { id: 'rain', label: 'बारिश', icon: '🌧️', toast: 'हाईवे पर हल्की बारिश 🌧️' },
+  { id: 'fog', label: 'धुंध', icon: '🌫️', toast: 'सर्दियों की धुंध 🌫️' }
+];
+let currentAtmosphereIdx = 0;
+
+function setupAtmosphereModes() {
+  const btnWeather = document.getElementById('btn-weather');
+  const weatherIcon = document.getElementById('weather-icon');
+  const weatherLabel = document.getElementById('weather-label');
+  const rainContainer = document.getElementById('rain-container');
+  const fogContainer = document.getElementById('fog-container');
+
+  function spawnRain(count = 45) {
+    if (!rainContainer) return;
+    rainContainer.innerHTML = '';
+    for (let i = 0; i < count; i++) {
+      const drop = document.createElement('div');
+      drop.className = 'raindrop';
+      const left = Math.random() * 100;
+      const speed = 0.5 + Math.random() * 0.6;
+      const delay = Math.random() * 2;
+      drop.style.cssText = `left: ${left}%; --rain-speed: ${speed}s; animation-delay: ${delay}s;`;
+      rainContainer.appendChild(drop);
+    }
+  }
+
+  if (btnWeather) {
+    btnWeather.addEventListener('click', () => {
+      currentAtmosphereIdx = (currentAtmosphereIdx + 1) % ATMOSPHERE_MODES.length;
+      const mode = ATMOSPHERE_MODES[currentAtmosphereIdx];
+
+      if (weatherIcon) weatherIcon.textContent = mode.icon;
+      if (weatherLabel) weatherLabel.textContent = mode.label;
+
+      if (mode.id === 'rain') {
+        if (rainContainer) rainContainer.classList.remove('hidden');
+        if (fogContainer) fogContainer.classList.add('hidden');
+        spawnRain(45);
+      } else if (mode.id === 'fog') {
+        if (rainContainer) rainContainer.classList.add('hidden');
+        if (fogContainer) fogContainer.classList.remove('hidden');
+      } else {
+        if (rainContainer) rainContainer.classList.add('hidden');
+        if (fogContainer) fogContainer.classList.add('hidden');
+      }
+
+      showToast(mode.toast);
+    });
+  }
+}
+
+// ══════════════════════════════════════════════════════════════════════
+// ONE-TAP SHARE MODAL CONTROLLER
+// ══════════════════════════════════════════════════════════════════════
+function setupShareModal() {
+  const btnShare = document.getElementById('btn-share');
+  const btnCloseShare = document.getElementById('btn-close-share');
+  const shareModal = document.getElementById('share-modal');
+  const btnShareWhatsapp = document.getElementById('btn-share-whatsapp');
+  const btnShareTwitter = document.getElementById('btn-share-twitter');
+  const btnCopyLink = document.getElementById('btn-copy-link');
+
+  const shareText = "रात का वो आख़िरी पड़ाव ☕ | रास्ते की कड़क चाय और सदाबहार हिंदी तराने। सुनो और सुकून पाओ: ";
+  const currentUrl = window.location.href;
+
+  if (btnShareWhatsapp) {
+    btnShareWhatsapp.href = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + currentUrl)}`;
+  }
+  if (btnShareTwitter) {
+    btnShareTwitter.href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(currentUrl)}`;
+  }
+
+  if (btnShare) {
+    btnShare.addEventListener('click', () => {
+      if (shareModal) shareModal.classList.remove('hidden');
+    });
+  }
+
+  if (btnCloseShare) {
+    btnCloseShare.addEventListener('click', () => {
+      if (shareModal) shareModal.classList.add('hidden');
+    });
+  }
+
+  if (shareModal) {
+    shareModal.addEventListener('click', (e) => {
+      if (e.target === shareModal) shareModal.classList.add('hidden');
+    });
+  }
+
+  if (btnCopyLink) {
+    btnCopyLink.addEventListener('click', () => {
+      navigator.clipboard.writeText(currentUrl).then(() => {
+        showToast('लिंक कॉपी हो गया! दोस्तों के साथ शेयर करें ☕');
+        if (shareModal) shareModal.classList.add('hidden');
+      }).catch(() => {
+        showToast('लिंक: ' + currentUrl);
+      });
+    });
+  }
+}
+
+// ══════════════════════════════════════════════════════════════════════
 // INIT ON DOM READY
 // ══════════════════════════════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
@@ -871,5 +978,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupControls();
   spawnFireflies(18);
   setupKeyboardShortcuts();
+  setupAtmosphereModes();
+  setupShareModal();
   loadYouTubeAPI();
 });

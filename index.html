@@ -57,6 +57,15 @@
     <div class="steam-wisp wisp-5"></div>
   </div>
 
+  <!-- Highway Rain Container -->
+  <div class="rain-container hidden" id="rain-container" aria-hidden="true"></div>
+
+  <!-- Highway Fog Container -->
+  <div class="fog-container hidden" id="fog-container" aria-hidden="true">
+    <div class="fog-wave fog-1"></div>
+    <div class="fog-wave fog-2"></div>
+  </div>
+
   <!-- Minimal Floating Top Header Bar -->
   <header class="top-bar">
     <div class="top-left-time" id="highway-clock">11:19 am</div>
@@ -66,7 +75,18 @@
       <span id="listeners-count">201 online at NH-44</span>
     </div>
 
+    <div class="top-right-actions">
+      <!-- Atmosphere Mode Cycle Button -->
+      <button id="btn-weather" class="top-action-btn" title="मौसम बदलें (तारों भरी रात / बारिश / धुंध)">
+        <span id="weather-icon">🌙</span>
+        <span id="weather-label">रात</span>
+      </button>
 
+      <!-- Share Button -->
+      <button id="btn-share" class="top-action-btn share-top-btn" title="दोस्तों के साथ शेयर करें">
+        <span>🔗 शेयर करें</span>
+      </button>
+    </div>
   </header>
 
   <!-- Main Hero Title Section (Center Screen - Hindi Poster Style) -->
@@ -189,6 +209,31 @@
     </div>
     <div class="drawer-track-list" id="drawer-track-list">
       <!-- Tracks populated dynamically in app.js -->
+  </div>
+
+  <!-- One-Tap Share Glass Modal -->
+  <div id="share-modal" class="share-modal-overlay hidden">
+    <div class="share-glass-card">
+      <div class="share-header">
+        <h3>☕ चाय और गाना शेयर करें</h3>
+        <button id="btn-close-share" class="close-drawer-btn" title="बंद करें">&times;</button>
+      </div>
+      <div class="share-body">
+        <p class="share-quote">
+          "चाय गरम है, रास्ता लंबा है — रात का वो आख़िरी पड़ाव पर आओ दो पल पुराना गाना सुनो।"
+        </p>
+        <div class="share-buttons-grid">
+          <a id="btn-share-whatsapp" href="#" target="_blank" rel="noopener noreferrer" class="share-action-btn whatsapp-btn">
+            <span>💬 WhatsApp पर भेजें</span>
+          </a>
+          <button id="btn-copy-link" class="share-action-btn copy-btn">
+            <span>📋 लिंक कॉपी करें</span>
+          </button>
+          <a id="btn-share-twitter" href="#" target="_blank" rel="noopener noreferrer" class="share-action-btn twitter-btn">
+            <span>𝕏 Twitter पर शेयर करें</span>
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 
