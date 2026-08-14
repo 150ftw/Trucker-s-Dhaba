@@ -687,7 +687,7 @@ function initAudioContext() {
       b4 = 0.55000 * b4 + white * 0.5329522;
       b5 = -0.7616 * b5 - white * 0.0168980;
       output[i] = b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362;
-      output[i] *= 0.22;
+      output[i] *= 0.10;
       b6 = white * 0.115926;
     }
 
@@ -723,7 +723,7 @@ function toggleTapeHiss() {
     if (btnHiss) btnHiss.classList.add('active');
     if (gainNode && audioCtx) {
       gainNode.gain.cancelScheduledValues(audioCtx.currentTime);
-      gainNode.gain.setValueAtTime(0.25, audioCtx.currentTime);
+      gainNode.gain.setValueAtTime(0.06, audioCtx.currentTime);
     }
     showToast('टेप सरसराहट चालू है 📻');
   } else {
