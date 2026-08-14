@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>रात का वो आख़िरी पड़ाव | Raat Ka Woh Aakhri Padaav</title>
+  <meta name="description" content="रास्ते की कड़क चाय और लाउडस्पीकर पर पुराने हिंदी नगमे। A nighttime highway dhaba playing classic music on loop.">
+  
+  <!-- Google Fonts: Rozha One (Hindi Poster Title), Yatra One, Kalam, Outfit, Courier Prime, Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Inter:wght@400;500;600;700&family=Kalam:wght@400;700&family=Outfit:wght@300;400;500;600;700&family=Rozha+One&family=Yatra+One&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <!-- Full Viewport Background Image & Vignette Overlay -->
+  <div class="full-screen-bg"></div>
+  <div class="bg-vignette-overlay"></div>
+
+  <!-- Overhead String Lights -->
+  <div class="string-lights-wire" aria-hidden="true">
+    <svg class="wire-svg" viewBox="0 0 1200 60" preserveAspectRatio="none">
+      <path d="M0,15 Q300,50 600,20 Q900,55 1200,15" fill="none" stroke="rgba(255, 230, 200, 0.25)" stroke-width="2"/>
+    </svg>
+    <div class="bulbs-flex">
+      <div class="bulb-wrap"><div class="bulb-socket"></div><div class="bulb-glass glow-yellow"></div></div>
+      <div class="bulb-wrap"><div class="bulb-socket"></div><div class="bulb-glass glow-warm flicker-slow"></div></div>
+      <div class="bulb-wrap moth-target">
+        <div class="bulb-socket"></div>
+        <div class="bulb-glass glow-yellow flicker-fast"></div>
+        <div class="moth-anim">
+          <svg class="moth-svg" viewBox="0 0 20 20">
+            <ellipse cx="10" cy="10" rx="3" ry="6" fill="#4a3728"/>
+            <path d="M10,8 Q2,0 4,10 Q6,14 10,10" fill="rgba(235, 210, 170, 0.7)"/>
+            <path d="M10,8 Q18,0 16,10 Q14,14 10,10" fill="rgba(235, 210, 170, 0.7)"/>
+          </svg>
+        </div>
+      </div>
+      <div class="bulb-wrap"><div class="bulb-socket"></div><div class="bulb-glass glow-amber"></div></div>
+      <div class="bulb-wrap"><div class="bulb-socket"></div><div class="bulb-glass glow-yellow flicker-subtle"></div></div>
+      <div class="bulb-wrap"><div class="bulb-socket"></div><div class="bulb-glass glow-warm"></div></div>
+    </div>
+  </div>
+
+  <!-- Floating Fireflies -->
+  <div class="fireflies-container" id="fireflies-container" aria-hidden="true"></div>
+
+  <!-- Chai Steam Rising Particles -->
+  <div class="chai-steam-container" aria-hidden="true">
+    <div class="steam-wisp wisp-1"></div>
+    <div class="steam-wisp wisp-2"></div>
+    <div class="steam-wisp wisp-3"></div>
+    <div class="steam-wisp wisp-4"></div>
+    <div class="steam-wisp wisp-5"></div>
+  </div>
+
+  <!-- Minimal Floating Top Header Bar -->
+  <header class="top-bar">
+    <div class="top-left-time" id="highway-clock">11:19 am</div>
+    
+    <div class="top-center-status">
+      <span class="green-status-dot"></span>
+      <span id="listeners-count">201 online at NH-44</span>
+    </div>
+
+
+  </header>
+
+  <!-- Main Hero Title Section (Center Screen - Hindi Poster Style) -->
+  <main class="hero-center-content">
+    <h1 class="main-title-hindi">
+      <span class="word-1">रात का वो</span>
+      <span class="word-2">आख़िरी पड़ाव</span>
+    </h1>
+    <div class="main-subtitle-hindi">रात, चाय और पुराने गाने</div>
+    
+    <!-- Rotating Dhaba Owner One-Liner Tagline -->
+    <div class="hero-tagline-wrapper">
+      <p id="dhaba-tagline" class="hero-tagline-text">
+        "चाय गरम है, रास्ता लंबा है — दो पल बैठो, पुराना गाना सुनो।"
+      </p>
+    </div>
+  </main>
+
+  <!-- Bottom Floating Glass Custom Music Player Pill Bar -->
+  <footer class="bottom-player-bar">
+    <div class="player-glass-pill">
+      
+      <!-- Interactive Rotating Vinyl Artwork Thumbnail (Click to open playlist drawer) -->
+      <button class="vinyl-disc-btn" id="pill-art-btn" title="प्लेलिस्ट खोलें">
+        <div class="vinyl-art-wrap" id="vinyl-wrap">
+          <img id="track-cover" src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&auto=format&fit=crop&q=80" alt="Track Cover">
+          <div class="vinyl-center-hole"></div>
+        </div>
+      </button>
+
+      <!-- Track Metadata & Timeline Seek Slider -->
+      <div class="track-info-block">
+        <div class="track-title-row">
+          <span class="track-title" id="track-title">लग जा गले से फिर</span>
+          <span class="track-artist" id="track-artist">• लता मंगेशकर</span>
+        </div>
+
+        <!-- Custom Interactive Timeline Slider -->
+        <div class="slider-container">
+          <div class="slider-progress-bar" id="slider-progress-bar" style="width: 0%;"></div>
+          <input type="range" id="timeline-slider" min="0" max="100" value="0" step="0.1" aria-label="Seek track position">
+        </div>
+
+        <div class="track-time-row">
+          <span id="time-current">0:00</span>
+          <span>/</span>
+          <span id="time-duration">0:00</span>
+          <span class="status-badge-inline" id="status-badge">लाउडस्पीकर तैयार है</span>
+        </div>
+      </div>
+
+      <!-- Audio Visualizer Bars -->
+      <div class="visualizer-bars" id="visualizer-bars">
+        <span class="viz-bar"></span>
+        <span class="viz-bar"></span>
+        <span class="viz-bar"></span>
+        <span class="viz-bar"></span>
+        <span class="viz-bar"></span>
+      </div>
+
+      <!-- Playback Controls -->
+      <div class="player-controls-row">
+        <!-- Tape Hiss Ambient Toggle Pill -->
+        <button id="btn-hiss" class="ctrl-btn icon-btn hiss-toggle-btn" title="टेप सरसराहट">
+          <span id="hiss-icon">🔊</span>
+        </button>
+
+        <!-- Shuffle Toggle -->
+        <button id="btn-shuffle" class="ctrl-btn icon-btn shuffle-btn" title="शफ़ल">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/></svg>
+        </button>
+
+        <!-- Previous Track Button -->
+        <button id="btn-prev" class="ctrl-btn icon-btn" title="पिछला गाना">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+        </button>
+
+        <!-- Main Circular Play/Pause Button -->
+        <button id="btn-play" class="play-circle-btn" title="सुनाओ / आवाज़ धीमी करो">
+          <svg id="play-icon-svg" viewBox="0 0 24 24" width="22" height="22" fill="#1C1510"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+
+        <!-- Next Track Button -->
+        <button id="btn-next" class="ctrl-btn icon-btn" title="अगला गाना">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+        </button>
+
+        <!-- Repeat Toggle -->
+        <button id="btn-repeat" class="ctrl-btn icon-btn repeat-btn" title="दोहराएँ">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/></svg>
+        </button>
+
+        <!-- Volume Slider -->
+        <div class="volume-control">
+          <button id="btn-vol" class="ctrl-btn icon-btn vol-btn" title="आवाज़">
+            <svg id="vol-icon-svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+          </button>
+          <div class="volume-slider-wrap" id="volume-slider-wrap">
+            <input type="range" id="volume-slider" min="0" max="100" value="80" class="volume-range" aria-label="Volume">
+          </div>
+        </div>
+
+        <!-- Playlist Drawer Toggle Button -->
+        <button id="btn-drawer" class="ctrl-btn icon-btn playlist-btn" title="गानों की सूची">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
+        </button>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Slide-Up Playlist Drawer Modal -->
+  <div id="playlist-drawer" class="playlist-drawer-modal">
+    <div class="drawer-header">
+      <div class="drawer-title-wrap">
+        <span class="drawer-title-icon">📻</span>
+        <h3>सदाबहार हिंदी तराने</h3>
+      </div>
+      <button id="btn-close-drawer" class="close-drawer-btn" title="बंद करें">&times;</button>
+    </div>
+    <div class="drawer-track-list" id="drawer-track-list">
+      <!-- Tracks populated dynamically in app.js -->
+    </div>
+  </div>
+
+  <!-- Toast Notification Popup -->
+  <div id="toast-notify" class="toast-popup hidden" aria-live="polite">
+    <span class="toast-icon">☕</span>
+    <span id="toast-text">अगले मुसाफिर की पसंद का गाना बज रहा है…</span>
+  </div>
+
+  <!-- Hidden YouTube IFrame Player (audio source, not visible) -->
+  <div id="yt-player-wrap" style="position:fixed;bottom:-9999px;left:-9999px;width:1px;height:1px;overflow:hidden;pointer-events:none;opacity:0;">
+    <div id="yt-player"></div>
+  </div>
+
+  <!-- YouTube IFrame API -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

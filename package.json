@@ -1,0 +1,14 @@
+{
+  "name": "raat-da-dhaba",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Single-page nostalgia music site themed around a nighttime highway dhaba tape deck",
+  "scripts": {
+    "dev": "vite --port 3000 --open",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^5.2.0"
+  }
+}
