@@ -39,7 +39,7 @@ body {
       rgba(8, 12, 18, 0.15) 40%, 
       rgba(8, 12, 18, 0.75) 100%
     ),
-    url('/dhaba-bg.jpg') center / cover no-repeat fixed;
+    url('./dhaba-bg.jpg') center / cover no-repeat fixed;
   position: relative;
   -webkit-font-smoothing: antialiased;
 }
