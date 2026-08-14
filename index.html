@@ -212,12 +212,35 @@
     </div>
   </div>
 
-  <!-- Fullscreen Link Copied Modal -->
-  <div id="copy-alert-modal" class="fullscreen-copy-modal hidden" aria-live="polite">
-    <div class="copy-alert-card">
-      <div class="copy-alert-icon">☕</div>
-      <h2 class="copy-alert-title">लिंक कॉपी हो गया!</h2>
-      <p class="copy-alert-sub">दोस्तों के साथ शेयर करें — रास्ते की कड़क चाय और सदाबहार नगमे 📻</p>
+  <!-- Share Options Modal (2 Choices: Direct Link Copy & WhatsApp Share) -->
+  <div id="share-modal" class="fullscreen-copy-modal hidden" aria-live="polite">
+    <div class="share-options-card">
+      <div class="share-card-header">
+        <span class="share-card-icon">☕</span>
+        <h3>शेयर करें</h3>
+        <button id="btn-close-share" class="close-drawer-btn" title="बंद करें">&times;</button>
+      </div>
+      <p class="share-card-sub">रास्ते की कड़क चाय और सदाबहार नगमे दोस्तों के साथ बाँटें</p>
+      
+      <div class="share-options-flex">
+        <!-- Choice 1: Direct Link Copy -->
+        <button id="btn-copy-direct" class="share-opt-btn copy-opt-btn">
+          <span class="opt-icon">📋</span>
+          <div class="opt-text">
+            <span class="opt-title" id="copy-opt-title">लिंक कॉपी करें</span>
+            <span class="opt-desc">क्लिपबोर्ड पर डायरेक्ट सेव करें</span>
+          </div>
+        </button>
+
+        <!-- Choice 2: Direct WhatsApp Share -->
+        <a id="btn-share-whatsapp" href="#" target="_blank" rel="noopener noreferrer" class="share-opt-btn whatsapp-opt-btn">
+          <span class="opt-icon">💬</span>
+          <div class="opt-text">
+            <span class="opt-title">WhatsApp पर भेजें</span>
+            <span class="opt-desc">डायरेक्ट WhatsApp चैट में शेयर करें</span>
+          </div>
+        </a>
+      </div>
     </div>
   </div>
 
